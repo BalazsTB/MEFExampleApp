@@ -1,0 +1,123 @@
+<Window x:Class="MEFExampleApp.Shell.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MEF Example Application" Height="520" Width="820"
+        WindowStartupLocation="CenterScreen"
+        Background="#F0F0F0">
+
+    <Window.Resources>
+        <!-- Module list item style -->
+        <Style x:Key="ModuleListItem" TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="2,2,2,0"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="#DDD" BorderThickness="1"
+                                CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#0078D4"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E5F1FB"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" Value="#006CC1"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#0078D4" Padding="16,12">
+            <StackPanel>
+                <TextBlock Text="MEF Example Application"
+                           Foreground="White" FontSize="20" FontWeight="Bold"/>
+                <TextBlock Text="Modules are discovered at runtime via MEF — the Shell has no compile-time reference to any module."
+                           Foreground="#C0DCFF" FontSize="11" Margin="0,4,0,0"
+                           TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main content -->
+        <Grid Grid.Row="1" Margin="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220" MinWidth="160"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: discovered modules list -->
+            <Border Grid.Column="0" Background="White" BorderBrush="#DDD"
+                    BorderThickness="1" CornerRadius="6">
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" Background="#F7F7F7"
+                            BorderBrush="#DDD" BorderThickness="0,0,0,1" Padding="10,8">
+                        <TextBlock Text="Discovered Modules" FontWeight="SemiBold" FontSize="13"/>
+                    </Border>
+
+                    <ListBox ItemsSource="{Binding Modules}"
+                             SelectedItem="{Binding SelectedModule}"
+                             ItemContainerStyle="{StaticResource ModuleListItem}"
+                             BorderThickness="0" Background="Transparent"
+                             Padding="6,4">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="#{Order} " FontSize="11"
+                                                   Foreground="#999" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold"
+                                                   FontSize="13"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Description}" FontSize="11"
+                                               Foreground="#666" TextWrapping="Wrap"
+                                               Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+
+            <!-- Splitter -->
+            <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch" Background="Transparent" Cursor="SizeWE"/>
+
+            <!-- Right: selected module view -->
+            <Border Grid.Column="2" Background="White" BorderBrush="#DDD"
+                    BorderThickness="1" CornerRadius="6">
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" Background="#F7F7F7"
+                            BorderBrush="#DDD" BorderThickness="0,0,0,1" Padding="10,8">
+                        <TextBlock Text="{Binding SelectedModule.Name, FallbackValue='No module selected'}"
+                                   FontWeight="SemiBold" FontSize="13"/>
+                    </Border>
+
+                    <!-- ContentPresenter hosts whatever UIElement the module returns -->
+                    <ContentPresenter Content="{Binding SelectedView}" Margin="12"/>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
