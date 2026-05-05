@@ -51,6 +51,12 @@ namespace MEFExampleApp.Modules.Greeting
 
         public bool CanExecute(object parameter) => _canExecute();
         public void Execute(object parameter) => _execute();
-        public event System.EventHandler CanExecuteChanged;
+
+        // Hook into WPF's command manager so the button re-evaluates CanExecute automatically.
+        public event System.EventHandler CanExecuteChanged
+        {
+            add    => System.Windows.Input.CommandManager.RequerySuggested += value;
+            remove => System.Windows.Input.CommandManager.RequerySuggested -= value;
+        }
     }
 }

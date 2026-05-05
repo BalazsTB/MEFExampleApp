@@ -77,6 +77,12 @@ namespace MEFExampleApp.Modules.Calculator
         public RelayCommand(Action execute) => _execute = execute;
         public bool CanExecute(object p) => true;
         public void Execute(object p) => _execute();
-        public event EventHandler CanExecuteChanged;
+
+        // Hook into WPF's command manager so buttons re-evaluate CanExecute automatically.
+        public event EventHandler CanExecuteChanged
+        {
+            add    => System.Windows.Input.CommandManager.RequerySuggested += value;
+            remove => System.Windows.Input.CommandManager.RequerySuggested -= value;
+        }
     }
 }
