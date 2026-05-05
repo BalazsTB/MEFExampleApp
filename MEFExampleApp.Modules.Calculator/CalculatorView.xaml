@@ -22,9 +22,9 @@
 
         <UniformGrid Rows="1" Columns="4" Margin="0,10,0,0">
             <Button Content="+" Command="{Binding AddCommand}"      Margin="0,0,4,0" Padding="8,6" FontSize="16"/>
-            <Button Content="&#x2212;" Command="{Binding SubtractCommand}" Margin="4,0,4,0" Padding="8,6" FontSize="16"/>
-            <Button Content="&#xD7;" Command="{Binding MultiplyCommand}" Margin="4,0,4,0" Padding="8,6" FontSize="16"/>
-            <Button Content="&#xF7;" Command="{Binding DivideCommand}"   Margin="4,0,0,0" Padding="8,6" FontSize="16"/>
+            <Button Content="-" Command="{Binding SubtractCommand}" Margin="4,0,4,0" Padding="8,6" FontSize="16"/>
+            <Button Content="×" Command="{Binding MultiplyCommand}" Margin="4,0,4,0" Padding="8,6" FontSize="16"/>
+            <Button Content="÷" Command="{Binding DivideCommand}"   Margin="4,0,0,0" Padding="8,6" FontSize="16"/>
         </UniformGrid>
 
         <Border Background="#F0F7FF" BorderBrush="#0078D4" BorderThickness="1"

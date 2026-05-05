@@ -11,7 +11,7 @@ namespace MEFExampleApp.Modules.Greeting
     /// </summary>
     [Export(typeof(IModule))]
     [ExportMetadata("Name", "Greeting")]
-    [ExportMetadata("Description", "Enter a name and get a personalised hello.")]
+    [ExportMetadata("Description", "Enter a name and get a personalized hello.")]
     [ExportMetadata("Order", 1)]
     public class GreetingModule : IModule
     {
