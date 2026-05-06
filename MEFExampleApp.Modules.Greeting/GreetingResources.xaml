@@ -1,0 +1,16 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MEFExampleApp.Modules.Greeting">
+
+    <!--
+        Implicit DataTemplate — no x:Key means WPF applies this template automatically
+        whenever it encounters a GreetingViewModel as content anywhere in the application.
+
+        The DataContext of GreetingView is set to the GreetingViewModel instance by WPF,
+        so the view code-behind needs no DataContext assignment at all.
+    -->
+    <DataTemplate DataType="{x:Type local:GreetingViewModel}">
+        <local:GreetingView/>
+    </DataTemplate>
+
+</ResourceDictionary>

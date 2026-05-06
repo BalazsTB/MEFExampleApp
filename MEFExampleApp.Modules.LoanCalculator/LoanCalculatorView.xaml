@@ -1,0 +1,80 @@
+<UserControl x:Class="MEFExampleApp.Modules.LoanCalculator.LoanCalculatorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MEFExampleApp.Modules.LoanCalculator">
+    <!--
+        Pure ViewModel-driven view.
+        Every value displayed and every action triggered is wired through DataContext bindings.
+        This file contains zero business logic — all of it lives in LoanCalculatorViewModel.
+    -->
+    <UserControl.Resources>
+        <!-- Converter: non-empty string → Visible, empty string → Collapsed -->
+        <local:StringToVisibilityConverter x:Key="StringToVisibility"/>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" MaxWidth="460" HorizontalAlignment="Left">
+
+            <TextBlock Text="Loan Calculator Module" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>
+            <TextBlock Text="Fill in the fields below — the ViewModel handles all parsing, validation, and computation."
+                       TextWrapping="Wrap" Foreground="#555" Margin="0,0,0,20"/>
+
+            <!-- ── Text input ──────────────────────────────────────────────────── -->
+            <TextBlock Text="Loan label" FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <TextBlock Text="Describe what the loan is for (e.g. 'New car', 'Home renovation')."
+                       Foreground="#666" FontSize="11" Margin="0,0,0,4"/>
+            <TextBox Text="{Binding LoanLabel, UpdateSourceTrigger=PropertyChanged}"
+                     Padding="6,5" FontSize="14"
+                     HorizontalAlignment="Stretch"/>
+
+            <Separator Margin="0,16,0,16" Background="#DDD"/>
+
+            <!-- ── Numeric inputs ──────────────────────────────────────────────── -->
+            <TextBlock Text="Loan amount (£)" FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <TextBox Text="{Binding Principal, UpdateSourceTrigger=PropertyChanged}"
+                     Padding="6,5" FontSize="14" TextAlignment="Right"
+                     HorizontalAlignment="Stretch"/>
+
+            <TextBlock Text="Annual interest rate (%)" FontWeight="SemiBold" Margin="0,12,0,4"/>
+            <TextBox Text="{Binding AnnualRate, UpdateSourceTrigger=PropertyChanged}"
+                     Padding="6,5" FontSize="14" TextAlignment="Right"
+                     HorizontalAlignment="Stretch"/>
+
+            <TextBlock Text="Loan term (years)" FontWeight="SemiBold" Margin="0,12,0,4"/>
+            <TextBox Text="{Binding TermYears, UpdateSourceTrigger=PropertyChanged}"
+                     Padding="6,5" FontSize="14" TextAlignment="Right"
+                     HorizontalAlignment="Stretch"/>
+
+            <!-- Validation message — only visible when non-empty -->
+            <TextBlock Text="{Binding ValidationMessage}"
+                       Foreground="#C42B1C" FontSize="12" Margin="0,8,0,0"
+                       TextWrapping="Wrap"
+                       Visibility="{Binding ValidationMessage,
+                                    Converter={StaticResource StringToVisibility}}"/>
+
+            <!-- ── Action ────────────────────────────────────────────────────────── -->
+            <Button Content="Calculate"
+                    Command="{Binding CalculateCommand}"
+                    HorizontalAlignment="Left"
+                    Margin="0,16,0,0" Padding="16,8"
+                    Background="#0078D4" Foreground="White"
+                    BorderThickness="0" FontSize="14" FontWeight="SemiBold"/>
+
+            <!-- ── Results ────────────────────────────────────────────────────────── -->
+            <Border Background="#F0F7FF" BorderBrush="#0078D4" BorderThickness="1"
+                    CornerRadius="6" Padding="16,12" Margin="0,20,0,0"
+                    Visibility="{Binding MonthlyPayment,
+                                 Converter={StaticResource StringToVisibility}}">
+                <StackPanel>
+                    <TextBlock Text="{Binding MonthlyPayment}"
+                               FontSize="22" FontWeight="Bold" Foreground="#0078D4"/>
+                    <TextBlock Text="{Binding TotalRepayment}"
+                               FontSize="13" Foreground="#333" Margin="0,6,0,0"/>
+                    <TextBlock Text="{Binding TotalInterest}"
+                               FontSize="13" Foreground="#555" Margin="0,2,0,0"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

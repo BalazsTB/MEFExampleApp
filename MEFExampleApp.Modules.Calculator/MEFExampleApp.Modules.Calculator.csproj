@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <OutputType>Library</OutputType>
+    <AssemblyName>MEFExampleApp.Modules.Calculator</AssemblyName>
+    <RootNamespace>MEFExampleApp.Modules.Calculator</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.Composition" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MEFExampleApp.Contracts\MEFExampleApp.Contracts.csproj" />
+  </ItemGroup>
+  <!-- Copy this DLL to Shell's Plugins folder so DirectoryCatalog picks it up -->
+  <Target Name="CopyToPlugins" AfterTargets="Build">
+    <PropertyGroup>
+      <PluginsDir>$(MSBuildThisFileDirectory)..\MEFExampleApp.Shell\bin\$(Configuration)\net48\Plugins\</PluginsDir>
+    </PropertyGroup>
+    <MakeDir Directories="$(PluginsDir)" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll"
+          DestinationFolder="$(PluginsDir)"
+          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).pdb"
+          DestinationFolder="$(PluginsDir)"
+          SkipUnchangedFiles="true"
+          Condition="Exists('$(OutputPath)$(AssemblyName).pdb')" />
+  </Target>
+</Project>

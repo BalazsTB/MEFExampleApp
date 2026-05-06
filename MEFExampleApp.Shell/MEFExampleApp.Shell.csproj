@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>MEFExampleApp.Shell</AssemblyName>
+    <RootNamespace>MEFExampleApp.Shell</RootNamespace>
+    <StartupObject>MEFExampleApp.Shell.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.Composition" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MEFExampleApp.Contracts\MEFExampleApp.Contracts.csproj" />
+  </ItemGroup>
+</Project>
