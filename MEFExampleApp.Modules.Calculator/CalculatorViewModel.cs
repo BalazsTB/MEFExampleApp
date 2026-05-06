@@ -2,26 +2,21 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using MEFExampleApp.Contracts;
 
 namespace MEFExampleApp.Modules.Calculator
 {
     public class CalculatorViewModel : INotifyPropertyChanged
     {
-        private string _left = "0";
-        private string _right = "0";
         private string _result = string.Empty;
 
-        public string Left
-        {
-            get => _left;
-            set { _left = value; OnPropertyChanged(); }
-        }
+        /// <summary>Numeric parameter for the left operand.</summary>
+        public INumericParameterViewModel Left { get; } =
+            new NumericParameterViewModel(new NumericParameter("Left operand", "0"));
 
-        public string Right
-        {
-            get => _right;
-            set { _right = value; OnPropertyChanged(); }
-        }
+        /// <summary>Numeric parameter for the right operand.</summary>
+        public INumericParameterViewModel Right { get; } =
+            new NumericParameterViewModel(new NumericParameter("Right operand", "0"));
 
         public string Result
         {
@@ -44,13 +39,16 @@ namespace MEFExampleApp.Modules.Calculator
 
         private void Calculate(string op)
         {
-            if (!double.TryParse(Left, out double a) || !double.TryParse(Right, out double b))
+            if (!Left.IsValid || !Right.IsValid)
             {
                 Result = "Invalid input";
                 return;
             }
 
+            double a = Left.NumericValue.Value;
+            double b = Right.NumericValue.Value;
             double answer;
+
             switch (op)
             {
                 case "+": answer = a + b; break;

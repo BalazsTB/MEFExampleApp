@@ -8,8 +8,9 @@
         <TextBlock Text="This module was discovered by MEF at runtime from the Plugins folder."
                    TextWrapping="Wrap" Foreground="#555" Margin="0,0,0,20"/>
 
-        <TextBlock Text="Your name:" Margin="0,0,0,4"/>
-        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+        <TextBlock Text="{Binding NameParam.Prompt}" Margin="0,0,0,4"/>
+        <TextBox Text="{Binding NameParam.Value, UpdateSourceTrigger=PropertyChanged}"
+                 IsEnabled="{Binding NameParam.IsEnabled}"
                  Width="220" HorizontalAlignment="Left"
                  Padding="6,4" FontSize="14"/>
 
