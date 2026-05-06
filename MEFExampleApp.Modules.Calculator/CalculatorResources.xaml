@@ -1,0 +1,15 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MEFExampleApp.Modules.Calculator">
+
+    <!--
+        Implicit DataTemplate — WPF applies this automatically whenever it sees a
+        CalculatorViewModel as content.  No x:Key means no explicit lookup is needed.
+
+        DataContext is injected by WPF; CalculatorView.xaml.cs has no DataContext code.
+    -->
+    <DataTemplate DataType="{x:Type local:CalculatorViewModel}">
+        <local:CalculatorView/>
+    </DataTemplate>
+
+</ResourceDictionary>

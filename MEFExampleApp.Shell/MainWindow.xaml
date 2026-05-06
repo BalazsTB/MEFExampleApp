@@ -53,7 +53,7 @@
             <StackPanel>
                 <TextBlock Text="MEF Example Application"
                            Foreground="White" FontSize="20" FontWeight="Bold"/>
-                <TextBlock Text="Modules are discovered at runtime via MEF — the Shell has no compile-time reference to any module."
+                <TextBlock Text="Modules discovered at runtime via MEF. Views are driven by ViewModels — the Shell never references a View type."
                            Foreground="#C0DCFF" FontSize="11" Margin="0,4,0,0"
                            TextWrapping="Wrap"/>
             </StackPanel>
@@ -114,8 +114,14 @@
                                    FontWeight="SemiBold" FontSize="13"/>
                     </Border>
 
-                    <!-- ContentPresenter hosts whatever UIElement the module returns -->
-                    <ContentPresenter Content="{Binding SelectedView}" Margin="12"/>
+                    <!--
+                        ViewModel-first rendering:
+                        Content is set to a plain ViewModel object (e.g. GreetingViewModel).
+                        WPF looks up the implicit DataTemplate registered for that type in
+                        Application.Current.Resources and renders the matching View — no
+                        View type is mentioned anywhere in the shell's XAML or C#.
+                    -->
+                    <ContentPresenter Content="{Binding SelectedViewModel}" Margin="12"/>
                 </DockPanel>
             </Border>
         </Grid>

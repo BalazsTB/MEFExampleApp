@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using MEFExampleApp.Contracts;
 
 namespace MEFExampleApp.Shell
@@ -18,6 +17,13 @@ namespace MEFExampleApp.Shell
     /// before the module object is even constructed.
     ///
     /// [Export] makes this class itself discoverable by the container (see Bootstrapper).
+    ///
+    /// ViewModel-first rendering
+    /// ─────────────────────────
+    /// SelectedViewModel is a plain object (the module's ViewModel).  The shell's
+    /// ContentPresenter binds to it; WPF matches the type against the implicit
+    /// DataTemplates that were merged into Application.Current.Resources by the
+    /// Bootstrapper and renders the correct View automatically.
     /// </summary>
     [Export]
     public class MainViewModel : INotifyPropertyChanged, IPartImportsSatisfiedNotification
@@ -37,11 +43,16 @@ namespace MEFExampleApp.Shell
             {
                 _selectedModule = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SelectedView));
+                OnPropertyChanged(nameof(SelectedViewModel));
             }
         }
 
-        public UIElement SelectedView => _selectedModule?.Module.GetView();
+        /// <summary>
+        /// The ViewModel of the currently selected module.
+        /// Binding this to a ContentPresenter is all the shell needs to do —
+        /// WPF finds the View via the implicit DataTemplate registered at startup.
+        /// </summary>
+        public object SelectedViewModel => _selectedModule?.ViewModel;
 
         /// <summary>Called by MEF after all imports have been satisfied.</summary>
         public void OnImportsSatisfied()

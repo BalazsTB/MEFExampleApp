@@ -99,7 +99,51 @@ var viewModel  = container.GetExportedValue<MainViewModel>();
 
 ---
 
-## Why this is advantageous
+## ViewModel-driven views (implicit DataTemplates)
+
+A key WPF pattern demonstrated here is **ViewModel-first rendering**: instead of a module returning a `UIElement`, it returns a plain ViewModel object and a `ResourceDictionary` containing an *implicit* `DataTemplate`.
+
+### How it works
+
+```
+Module.GetViewModel()  →  GreetingViewModel instance
+Module.GetResources()  →  ResourceDictionary with:
+
+    <DataTemplate DataType="{x:Type local:GreetingViewModel}">
+        <local:GreetingView/>
+    </DataTemplate>
+```
+
+The Bootstrapper merges each module's `ResourceDictionary` into `Application.Current.Resources`:
+
+```csharp
+foreach (var entry in viewModel.Modules)
+{
+    Application.Current.Resources.MergedDictionaries.Add(entry.Module.GetResources());
+}
+```
+
+The shell's `ContentPresenter` binds to the ViewModel:
+
+```xml
+<ContentPresenter Content="{Binding SelectedViewModel}"/>
+```
+
+WPF sees a `GreetingViewModel` as content, searches the resource tree for a `DataTemplate` whose `DataType` matches, finds the one just merged, and renders `GreetingView` automatically.
+
+### Why this simplifies views
+
+| Without ViewModel-first | With ViewModel-first |
+|---|---|
+| Module manually creates View, sets `DataContext`, returns `UIElement` | Module returns a plain ViewModel object |
+| View code-behind assigns `DataContext` | View code-behind is empty — just `InitializeComponent()` |
+| Shell works with `UIElement` — UI-coupled | Shell works with `object` — no UI coupling |
+| Shell's XAML references `UIElement`/`SelectedView` | Shell's XAML references `object`/`SelectedViewModel` |
+
+The View becomes a **pure template** — a declaration of how to display a ViewModel. The ViewModel drives all state and behavior; the View just reacts to it.
+
+---
+
 
 | Benefit | How it shows up here |
 |---|---|
@@ -153,16 +197,31 @@ The `CopyToPlugins` MSBuild target in each module `.csproj` copies the module DL
 [ExportMetadata("Order",       3)]
 public class MyModule : IModule
 {
-    public UIElement GetView()
-    {
-        var view = new MyView();
-        view.DataContext = new MyViewModel();
-        return view;
-    }
+    public object GetViewModel() => new MyViewModel();
+
+    public ResourceDictionary GetResources() =>
+        new ResourceDictionary
+        {
+            Source = new Uri(
+                "pack://application:,,,/MEFExampleApp.Modules.MyModule;component/MyResources.xaml",
+                UriKind.Absolute)
+        };
 }
 ```
 
-5. **Add the `CopyToPlugins` build target** (copy from an existing module `.csproj`).
-6. Build — your module appears in the shell's left-hand list automatically.
+5. **Add `MyResources.xaml`** to the project with an implicit DataTemplate:
+
+```xml
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MEFExampleApp.Modules.MyModule">
+    <DataTemplate DataType="{x:Type local:MyViewModel}">
+        <local:MyView/>
+    </DataTemplate>
+</ResourceDictionary>
+```
+
+6. **Add the `CopyToPlugins` build target** (copy from an existing module `.csproj`).
+7. Build — your module appears in the shell's left-hand list automatically.
 
 > **No changes to the Shell or Contracts projects are required.**
