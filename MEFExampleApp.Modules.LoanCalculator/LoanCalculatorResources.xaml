@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MEFExampleApp.Modules.LoanCalculator">
+
+    <!--
+        Implicit DataTemplate (no x:Key) — WPF applies this automatically whenever a
+        LoanCalculatorViewModel appears as the Content of a ContentPresenter anywhere
+        in the application.
+
+        The shell never names this type.  It only holds an `object` (the ViewModel);
+        WPF does the lookup and renders LoanCalculatorView, setting DataContext to the
+        ViewModel instance automatically.
+    -->
+    <DataTemplate DataType="{x:Type local:LoanCalculatorViewModel}">
+        <local:LoanCalculatorView/>
+    </DataTemplate>
+
+</ResourceDictionary>
