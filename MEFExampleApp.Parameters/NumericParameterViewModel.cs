@@ -1,18 +1,18 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MEFExampleApp.Contracts
+namespace MEFExampleApp.Parameters
 {
     /// <summary>
-    /// Observable ViewModel for a free-text input parameter.
-    /// Wraps an <see cref="ITextParameter"/> model and raises
+    /// Observable ViewModel for a numeric input parameter.
+    /// Wraps an <see cref="INumericParameter"/> model and raises
     /// <see cref="INotifyPropertyChanged"/> events so WPF bindings stay current.
-    /// Implements <see cref="ITextParameterViewModel"/> without inheriting from any base class —
+    /// Implements <see cref="INumericParameterViewModel"/> without inheriting from any base class —
     /// interface composition is preferred over inheritance.
     /// </summary>
-    public class TextParameterViewModel : ITextParameterViewModel
+    public class NumericParameterViewModel : INumericParameterViewModel
     {
-        private readonly ITextParameter _model;
+        private readonly INumericParameter _model;
 
         /// <inheritdoc/>
         public string Prompt => _model.Prompt;
@@ -28,13 +28,25 @@ namespace MEFExampleApp.Contracts
         public string Value
         {
             get => _model.Value;
-            set { _model.Value = value; OnPropertyChanged(); }
+            set
+            {
+                _model.Value = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(NumericValue));
+                OnPropertyChanged(nameof(IsValid));
+            }
         }
 
+        /// <inheritdoc/>
+        public double? NumericValue => _model.NumericValue;
+
+        /// <inheritdoc/>
+        public bool IsValid => _model.IsValid;
+
         /// <summary>
-        /// Creates a new <see cref="TextParameterViewModel"/> that wraps <paramref name="model"/>.
+        /// Creates a new <see cref="NumericParameterViewModel"/> that wraps <paramref name="model"/>.
         /// </summary>
-        public TextParameterViewModel(ITextParameter model)
+        public NumericParameterViewModel(INumericParameter model)
         {
             _model = model;
         }

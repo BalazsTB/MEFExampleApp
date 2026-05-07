@@ -1,4 +1,4 @@
-namespace MEFExampleApp.Contracts
+namespace MEFExampleApp.Parameters
 {
     /// <summary>
     /// A parameter whose value is free-form text.

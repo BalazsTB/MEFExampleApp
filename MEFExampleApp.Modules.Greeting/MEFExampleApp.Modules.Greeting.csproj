@@ -11,6 +11,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MEFExampleApp.Contracts\MEFExampleApp.Contracts.csproj" />
+    <ProjectReference Include="..\MEFExampleApp.Parameters\MEFExampleApp.Parameters.csproj" />
   </ItemGroup>
   <!-- Copy this DLL to Shell's Plugins folder so DirectoryCatalog picks it up -->
   <Target Name="CopyToPlugins" AfterTargets="Build">

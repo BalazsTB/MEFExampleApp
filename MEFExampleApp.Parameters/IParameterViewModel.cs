@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace MEFExampleApp.Contracts
+namespace MEFExampleApp.Parameters
 {
     /// <summary>
     /// Observable wrapper around an <see cref="IParameter"/>.

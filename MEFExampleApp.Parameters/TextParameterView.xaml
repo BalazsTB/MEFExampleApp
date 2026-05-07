@@ -1,0 +1,15 @@
+<UserControl x:Class="MEFExampleApp.Parameters.TextParameterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--
+        Reusable view for a free-text parameter.
+        DataContext must be an ITextParameterViewModel (typically TextParameterViewModel).
+        Renders a prompt label followed by a text box bound to Value.
+    -->
+    <StackPanel>
+        <TextBlock Text="{Binding Prompt}" FontWeight="SemiBold" Margin="0,0,0,4"/>
+        <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                 IsEnabled="{Binding IsEnabled}"
+                 Padding="6,5" FontSize="14"/>
+    </StackPanel>
+</UserControl>

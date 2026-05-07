@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using MEFExampleApp.Contracts;
+using MEFExampleApp.Parameters;
 
 namespace MEFExampleApp.Modules.LoanCalculator
 {
