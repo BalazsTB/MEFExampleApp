@@ -14,9 +14,11 @@
                 <ColumnDefinition Width="12"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Text="{Binding Left, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Grid.Column="0" Text="{Binding Left.Value, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="{Binding Left.IsEnabled}"
                      Padding="6,4" FontSize="16" TextAlignment="Right"/>
-            <TextBox Grid.Column="2" Text="{Binding Right, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Grid.Column="2" Text="{Binding Right.Value, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="{Binding Right.IsEnabled}"
                      Padding="6,4" FontSize="16" TextAlignment="Right"/>
         </Grid>
 

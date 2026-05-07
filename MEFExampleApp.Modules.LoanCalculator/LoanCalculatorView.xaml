@@ -20,28 +20,32 @@
                        TextWrapping="Wrap" Foreground="#555" Margin="0,0,0,20"/>
 
             <!-- ── Text input ──────────────────────────────────────────────────── -->
-            <TextBlock Text="Loan label" FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <TextBlock Text="{Binding LoanLabel.Prompt}" FontWeight="SemiBold" Margin="0,0,0,4"/>
             <TextBlock Text="Describe what the loan is for (e.g. 'New car', 'Home renovation')."
                        Foreground="#666" FontSize="11" Margin="0,0,0,4"/>
-            <TextBox Text="{Binding LoanLabel, UpdateSourceTrigger=PropertyChanged}"
+            <TextBox Text="{Binding LoanLabel.Value, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="{Binding LoanLabel.IsEnabled}"
                      Padding="6,5" FontSize="14"
                      HorizontalAlignment="Stretch"/>
 
             <Separator Margin="0,16,0,16" Background="#DDD"/>
 
             <!-- ── Numeric inputs ──────────────────────────────────────────────── -->
-            <TextBlock Text="Loan amount (£)" FontWeight="SemiBold" Margin="0,0,0,4"/>
-            <TextBox Text="{Binding Principal, UpdateSourceTrigger=PropertyChanged}"
+            <TextBlock Text="{Binding Principal.Prompt}" FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <TextBox Text="{Binding Principal.Value, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="{Binding Principal.IsEnabled}"
                      Padding="6,5" FontSize="14" TextAlignment="Right"
                      HorizontalAlignment="Stretch"/>
 
-            <TextBlock Text="Annual interest rate (%)" FontWeight="SemiBold" Margin="0,12,0,4"/>
-            <TextBox Text="{Binding AnnualRate, UpdateSourceTrigger=PropertyChanged}"
+            <TextBlock Text="{Binding AnnualRate.Prompt}" FontWeight="SemiBold" Margin="0,12,0,4"/>
+            <TextBox Text="{Binding AnnualRate.Value, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="{Binding AnnualRate.IsEnabled}"
                      Padding="6,5" FontSize="14" TextAlignment="Right"
                      HorizontalAlignment="Stretch"/>
 
-            <TextBlock Text="Loan term (years)" FontWeight="SemiBold" Margin="0,12,0,4"/>
-            <TextBox Text="{Binding TermYears, UpdateSourceTrigger=PropertyChanged}"
+            <TextBlock Text="{Binding TermYears.Prompt}" FontWeight="SemiBold" Margin="0,12,0,4"/>
+            <TextBox Text="{Binding TermYears.Value, UpdateSourceTrigger=PropertyChanged}"
+                     IsEnabled="{Binding TermYears.IsEnabled}"
                      Padding="6,5" FontSize="14" TextAlignment="Right"
                      HorizontalAlignment="Stretch"/>
 

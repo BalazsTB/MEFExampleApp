@@ -1,19 +1,17 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using MEFExampleApp.Contracts;
 
 namespace MEFExampleApp.Modules.Greeting
 {
     public class GreetingViewModel : INotifyPropertyChanged
     {
-        private string _name = string.Empty;
         private string _greeting = string.Empty;
 
-        public string Name
-        {
-            get => _name;
-            set { _name = value; OnPropertyChanged(); }
-        }
+        /// <summary>Text parameter that holds the name the user enters.</summary>
+        public ITextParameterViewModel NameParam { get; } =
+            new TextParameterViewModel(new TextParameter("Your name"));
 
         public string Greeting
         {
@@ -26,9 +24,9 @@ namespace MEFExampleApp.Modules.Greeting
         public GreetingViewModel()
         {
             SayHelloCommand = new RelayCommand(
-                () => Greeting = string.IsNullOrWhiteSpace(Name)
+                () => Greeting = string.IsNullOrWhiteSpace(NameParam.Value)
                     ? "Hello, World!"
-                    : $"Hello, {Name.Trim()}!",
+                    : $"Hello, {NameParam.Value.Trim()}!",
                 () => true);
         }
 
