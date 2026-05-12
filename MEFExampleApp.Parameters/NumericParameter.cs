@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace MEFExampleApp.Contracts
+namespace MEFExampleApp.Parameters
 {
     /// <summary>Plain data model for a numeric input parameter.</summary>
     public class NumericParameter : INumericParameter

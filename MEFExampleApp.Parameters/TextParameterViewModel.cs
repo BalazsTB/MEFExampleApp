@@ -1,18 +1,18 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MEFExampleApp.Contracts
+namespace MEFExampleApp.Parameters
 {
     /// <summary>
-    /// Observable ViewModel for a numeric input parameter.
-    /// Wraps an <see cref="INumericParameter"/> model and raises
+    /// Observable ViewModel for a free-text input parameter.
+    /// Wraps an <see cref="ITextParameter"/> model and raises
     /// <see cref="INotifyPropertyChanged"/> events so WPF bindings stay current.
-    /// Implements <see cref="INumericParameterViewModel"/> without inheriting from any base class —
+    /// Implements <see cref="ITextParameterViewModel"/> without inheriting from any base class —
     /// interface composition is preferred over inheritance.
     /// </summary>
-    public class NumericParameterViewModel : INumericParameterViewModel
+    public class TextParameterViewModel : ITextParameterViewModel
     {
-        private readonly INumericParameter _model;
+        private readonly ITextParameter _model;
 
         /// <inheritdoc/>
         public string Prompt => _model.Prompt;
@@ -28,25 +28,13 @@ namespace MEFExampleApp.Contracts
         public string Value
         {
             get => _model.Value;
-            set
-            {
-                _model.Value = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(NumericValue));
-                OnPropertyChanged(nameof(IsValid));
-            }
+            set { _model.Value = value; OnPropertyChanged(); }
         }
 
-        /// <inheritdoc/>
-        public double? NumericValue => _model.NumericValue;
-
-        /// <inheritdoc/>
-        public bool IsValid => _model.IsValid;
-
         /// <summary>
-        /// Creates a new <see cref="NumericParameterViewModel"/> that wraps <paramref name="model"/>.
+        /// Creates a new <see cref="TextParameterViewModel"/> that wraps <paramref name="model"/>.
         /// </summary>
-        public NumericParameterViewModel(INumericParameter model)
+        public TextParameterViewModel(ITextParameter model)
         {
             _model = model;
         }

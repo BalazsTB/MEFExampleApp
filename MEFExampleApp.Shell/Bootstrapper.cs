@@ -42,7 +42,21 @@ namespace MEFExampleApp.Shell
             // ── 3. Resolve the main view-model (satisfies its [ImportMany]) ───────
             var viewModel = container.GetExportedValue<MainViewModel>();
 
-            // ── 4. Merge module DataTemplates into application resources ──────────
+            // ── 4. Merge parameter DataTemplates into application resources ────────
+            // ParameterResources.xaml provides implicit DataTemplates that map
+            // TextParameterViewModel → TextParameterView and
+            // NumericParameterViewModel → NumericParameterView.
+            // Merging once here means every module can use ContentControl to display
+            // parameter ViewModels without bundling its own templates.
+            Application.Current.Resources.MergedDictionaries.Add(
+                new ResourceDictionary
+                {
+                    Source = new Uri(
+                        "pack://application:,,,/MEFExampleApp.Parameters;component/ParameterResources.xaml",
+                        UriKind.Absolute)
+                });
+
+            // ── 5. Merge module DataTemplates into application resources ──────────
             // Each module's GetResources() returns a ResourceDictionary with an
             // implicit DataTemplate (no x:Key) that maps ViewModel type → View.
             // Merging here means WPF can find the template for any module ViewModel
@@ -53,7 +67,7 @@ namespace MEFExampleApp.Shell
                     entry.Module.GetResources());
             }
 
-            // ── 5. Show the shell ─────────────────────────────────────────────────
+            // ── 6. Show the shell ─────────────────────────────────────────────────
             var window = new MainWindow { DataContext = viewModel };
             Application.Current.MainWindow = window;
             window.Show();

@@ -12,5 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MEFExampleApp.Contracts\MEFExampleApp.Contracts.csproj" />
+    <ProjectReference Include="..\MEFExampleApp.Parameters\MEFExampleApp.Parameters.csproj" />
   </ItemGroup>
 </Project>

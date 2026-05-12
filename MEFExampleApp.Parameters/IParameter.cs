@@ -1,4 +1,4 @@
-namespace MEFExampleApp.Contracts
+namespace MEFExampleApp.Parameters
 {
     /// <summary>
     /// Common interface for a single input parameter.

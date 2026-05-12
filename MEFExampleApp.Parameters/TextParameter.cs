@@ -1,4 +1,4 @@
-namespace MEFExampleApp.Contracts
+namespace MEFExampleApp.Parameters
 {
     /// <summary>Plain data model for a free-text input parameter.</summary>
     public class TextParameter : ITextParameter

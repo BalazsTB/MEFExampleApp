@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <OutputType>Library</OutputType>
+    <AssemblyName>MEFExampleApp.Parameters</AssemblyName>
+    <RootNamespace>MEFExampleApp.Parameters</RootNamespace>
+  </PropertyGroup>
+</Project>
